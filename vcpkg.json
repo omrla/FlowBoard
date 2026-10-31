@@ -1,0 +1,21 @@
+{
+  "name": "flowboard",
+  "version-string": "1.0.0",
+  "description": "Hand-tracked whiteboard: draw in the air with Quest-style pinch gestures.",
+  "dependencies": [
+    {
+      "name": "opencv4",
+      "default-features": false,
+      "features": [
+        "dnn",
+        "dshow",
+        "msmf"
+      ]
+    },
+    {
+      "name": "wxwidgets",
+      "default-features": false
+    }
+  ],
+  "builtin-baseline": "d186940b2f0c4e8e5b4ff804af57d2a26fbfa091"
+}

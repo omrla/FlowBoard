@@ -1,0 +1,69 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <!-- FlowBoard's icon: a hand-tracking skeleton reaching down to pinch, drawing a line.
+       Rendered by wxWidgets (nanosvg), which has no clipping, so everything stays inside
+       the rounded tile. After editing, run `FlowBoard.exe --make-icon res\FlowBoard.ico`. -->
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#22252D"/>
+      <stop offset="1" stop-color="#121419"/>
+    </linearGradient>
+    <linearGradient id="ink" gradientUnits="userSpaceOnUse" x1="217" y1="300" x2="446" y2="398">
+      <stop offset="0" stop-color="#FFFFFF"/>
+      <stop offset="0.35" stop-color="#3D8BFF"/>
+      <stop offset="1" stop-color="#A45CFF"/>
+    </linearGradient>
+    <radialGradient id="glow" gradientUnits="userSpaceOnUse" cx="217" cy="300" r="58">
+      <stop offset="0" stop-color="#3D8BFF" stop-opacity="0.75"/>
+      <stop offset="1" stop-color="#3D8BFF" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="arm" gradientUnits="userSpaceOnUse" x1="392" y1="150" x2="495" y2="74">
+      <stop offset="0" stop-color="#FFFFFF" stop-opacity="0.26"/>
+      <stop offset="0.6" stop-color="#FFFFFF" stop-opacity="0.26"/>
+      <stop offset="1" stop-color="#FFFFFF" stop-opacity="0"/>
+    </linearGradient>
+  </defs>
+  <rect width="512" height="512" rx="112" fill="url(#bg)"/>
+  <rect x="2" y="2" width="508" height="508" rx="110" fill="none" stroke="#FFFFFF" stroke-opacity="0.08" stroke-width="4"/>
+  <g transform="translate(256 256) scale(1.1) translate(-286 -253)">
+    <!-- the forearm, reaching in from the top-right corner -->
+    <path d="M392 150 L495 74" fill="none" stroke="url(#arm)" stroke-width="12" stroke-linecap="round"/>
+    <!-- the line the pinch is drawing -->
+    <path d="M217 300 C212 370 268 412 330 398 S424 356 446 398" fill="none" stroke="url(#ink)" stroke-width="20" stroke-linecap="round"/>
+    <!-- ring and pinky, curled furthest back -->
+    <path d="M392 150 L240 104 L246 126 L256 150 M246 126 L178 128 L142 160 L126 204 M240 104 L190 96 L160 108 L138 132" fill="none" stroke="#FFFFFF" stroke-opacity="0.16" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/>
+    <g fill="#FFFFFF" fill-opacity="0.24">
+      <circle cx="246" cy="126" r="9"/>
+      <circle cx="178" cy="128" r="9"/>
+      <circle cx="142" cy="160" r="9"/>
+      <circle cx="126" cy="204" r="9"/>
+      <circle cx="240" cy="104" r="9"/>
+      <circle cx="190" cy="96" r="9"/>
+      <circle cx="160" cy="108" r="9"/>
+      <circle cx="138" cy="132" r="9"/>
+    </g>
+    <!-- middle finger, curled behind the index -->
+    <path d="M270 176 L256 150 L176 164 L150 212 L154 260" fill="none" stroke="#FFFFFF" stroke-opacity="0.28" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/>
+    <g fill="#FFFFFF" fill-opacity="0.42">
+      <circle cx="256" cy="150" r="10"/>
+      <circle cx="176" cy="164" r="10"/>
+      <circle cx="150" cy="212" r="10"/>
+      <circle cx="154" cy="260" r="10"/>
+    </g>
+    <!-- thumb and index, the pinch -->
+    <path d="M392 150 L372 196 L334 240 L286 280 L230 302 M392 150 L270 176 L198 198 L186 252 L204 298" fill="none" stroke="#FFFFFF" stroke-width="12" stroke-linecap="round" stroke-linejoin="round"/>
+    <g fill="#FFFFFF">
+      <circle cx="392" cy="150" r="13"/>
+      <circle cx="372" cy="196" r="13"/>
+      <circle cx="334" cy="240" r="13"/>
+      <circle cx="286" cy="280" r="13"/>
+      <circle cx="270" cy="176" r="13"/>
+      <circle cx="198" cy="198" r="13"/>
+      <circle cx="186" cy="252" r="13"/>
+    </g>
+    <circle cx="217" cy="300" r="58" fill="url(#glow)"/>
+    <g fill="#FFFFFF" stroke="#3D8BFF" stroke-width="5">
+      <circle cx="230" cy="302" r="14"/>
+      <circle cx="204" cy="298" r="14"/>
+    </g>
+  </g>
+</svg>

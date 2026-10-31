@@ -1,0 +1,4 @@
+// FlowBoard's resources: the .exe's icon (made from the SVG by `FlowBoard.exe --make-icon`),
+// and the SVG itself, which the app draws its window icon and top-bar logo from.
+FLOWBOARD_ICON ICON "FlowBoard.ico"
+FLOWBOARD_SVG RCDATA "FlowBoard.svg"

@@ -1,0 +1,4 @@
+# Text files are stored with LF and checked out with the platform's line endings.
+* text=auto
+*.ico binary
+*.onnx binary

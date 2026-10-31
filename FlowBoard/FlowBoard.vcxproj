@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <VCProjectVersion>18.0</VCProjectVersion>
+    <Keyword>Win32Proj</Keyword>
+    <ProjectGuid>{19390f34-547d-4496-9961-9d19d93ee9dd}</ProjectGuid>
+    <RootNamespace>FlowBoard</RootNamespace>
+    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v145</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v145</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <!-- OpenCV and wxWidgets come from vcpkg (manifest: ..\vcpkg.json), using the vcpkg that ships
+       with Visual Studio. Libraries install into ..\vcpkg_installed. -->
+  <PropertyGroup Label="Vcpkg">
+    <VcpkgEnableManifest>true</VcpkgEnableManifest>
+    <VcpkgInstalledDir>$(MSBuildProjectDirectory)\..\vcpkg_installed\</VcpkgInstalledDir>
+    <VcpkgTriplet>x64-windows</VcpkgTriplet>
+    <FlowBoardVcpkgRoot Condition="'$(VCPKG_ROOT)' != ''">$(VCPKG_ROOT)</FlowBoardVcpkgRoot>
+    <FlowBoardVcpkgRoot Condition="'$(FlowBoardVcpkgRoot)' == ''">$(VsInstallRoot)\VC\vcpkg</FlowBoardVcpkgRoot>
+  </PropertyGroup>
+  <!-- ONNX Runtime with DirectML runs the hand models on the graphics card. It is downloaded
+       once from nuget.org into ..\third_party\onnxruntime (see ..\tools\fetch-onnxruntime.ps1). -->
+  <PropertyGroup Label="OnnxRuntime">
+    <OnnxRuntimeDir>$(MSBuildProjectDirectory)\..\third_party\onnxruntime\</OnnxRuntimeDir>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+    <Import Project="$(FlowBoardVcpkgRoot)\scripts\buildsystems\msbuild\vcpkg.props" Condition="'$(VcpkgPropsImported)' != 'true'" />
+  </ImportGroup>
+  <ImportGroup Label="Shared">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <ItemDefinitionGroup>
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <SDLCheck>true</SDLCheck>
+      <ConformanceMode>true</ConformanceMode>
+      <LanguageStandard>stdcpp20</LanguageStandard>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <AdditionalOptions>/utf-8 %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalIncludeDirectories>$(VcpkgInstalledDir)$(VcpkgTriplet)\include\opencv4;$(OnnxRuntimeDir)include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <!-- wxWidgets as DLLs; vcpkg's wx/setup.h picks the Debug or Release variant. wx's headers
+           call CRT functions that /sdl would otherwise reject (C4996). -->
+      <PreprocessorDefinitions>NOMINMAX;__WXMSW__;WXUSINGDLL;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalLibraryDirectories>$(OnnxRuntimeDir)lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>onnxruntime.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+    <Manifest>
+      <EnableSegmentHeap>true</EnableSegmentHeap>
+    </Manifest>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    <Link>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="..\src\App.cpp" />
+    <ClCompile Include="..\src\AppIcon.cpp" />
+    <ClCompile Include="..\src\Board.cpp" />
+    <ClCompile Include="..\src\BoardIcons.cpp" />
+    <ClCompile Include="..\src\CameraPreview.cpp" />
+    <ClCompile Include="..\src\Chrome.cpp" />
+    <ClCompile Include="..\src\Gestures.cpp" />
+    <ClCompile Include="..\src\HandModels.cpp" />
+    <ClCompile Include="..\src\HandTracker.cpp" />
+    <ClCompile Include="..\src\InfoCard.cpp" />
+    <ClCompile Include="..\src\MainFrame.cpp" />
+    <ClCompile Include="..\src\NeuralNet.cpp" />
+    <ClCompile Include="..\src\PdfWriter.cpp" />
+    <ClCompile Include="..\src\TopBar.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\src\AppIcon.h" />
+    <ClInclude Include="..\src\Board.h" />
+    <ClInclude Include="..\src\BoardIcons.h" />
+    <ClInclude Include="..\src\CameraPreview.h" />
+    <ClInclude Include="..\src\Chrome.h" />
+    <ClInclude Include="..\src\Gestures.h" />
+    <ClInclude Include="..\src\HandModels.h" />
+    <ClInclude Include="..\src\HandTracker.h" />
+    <ClInclude Include="..\src\InfoCard.h" />
+    <ClInclude Include="..\src\LandmarkSmoother.h" />
+    <ClInclude Include="..\src\MainFrame.h" />
+    <ClInclude Include="..\src\NeuralNet.h" />
+    <ClInclude Include="..\src\OneEuroFilter.h" />
+    <ClInclude Include="..\src\PdfWriter.h" />
+    <ClInclude Include="..\src\TopBar.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <!-- Common controls v6 + per-monitor DPI awareness. -->
+    <Manifest Include="..\src\FlowBoard.manifest" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="..\res\FlowBoard.rc" />
+    <Image Include="..\res\FlowBoard.ico" />
+    <None Include="..\res\FlowBoard.svg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\vcpkg.json" />
+    <None Include="..\README.md" />
+    <None Include="..\models\palm_detection_mediapipe_2023feb.onnx" />
+    <None Include="..\models\handpose_estimation_mediapipe_2023feb.onnx" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+    <Import Project="$(FlowBoardVcpkgRoot)\scripts\buildsystems\msbuild\vcpkg.targets" />
+  </ImportGroup>
+  <Target Name="FetchOnnxRuntime" BeforeTargets="ClCompile" Condition="!Exists('$(OnnxRuntimeDir)lib\onnxruntime.lib')">
+    <Exec Command="powershell -NoProfile -ExecutionPolicy Bypass -File &quot;$(MSBuildProjectDirectory)\..\tools\fetch-onnxruntime.ps1&quot;" />
+  </Target>
+  <Target Name="FetchHandModels" BeforeTargets="ClCompile"
+          Condition="!Exists('$(MSBuildProjectDirectory)\..\models\palm_detection_mediapipe_2023feb.onnx') Or !Exists('$(MSBuildProjectDirectory)\..\models\handpose_estimation_mediapipe_2023feb.onnx')">
+    <Exec Command="powershell -NoProfile -ExecutionPolicy Bypass -File &quot;$(MSBuildProjectDirectory)\..\tools\fetch-models.ps1&quot;" />
+  </Target>
+  <!-- The hand-tracking models are loaded from a "models" folder next to the exe, and
+       ONNX Runtime's DLLs sit next to it. -->
+  <Target Name="CopyHandModels" AfterTargets="Build">
+    <ItemGroup>
+      <HandModel Include="$(MSBuildProjectDirectory)\..\models\*.onnx" />
+      <OnnxRuntimeDll Include="$(OnnxRuntimeDir)bin\*.dll" />
+    </ItemGroup>
+    <Copy SourceFiles="@(HandModel)" DestinationFolder="$(OutDir)models" SkipUnchangedFiles="true" />
+    <Copy SourceFiles="@(OnnxRuntimeDll)" DestinationFolder="$(OutDir)" SkipUnchangedFiles="true" />
+  </Target>
+</Project>

@@ -1,0 +1,11 @@
+# Build output and Visual Studio's own files
+.vs/
+x64/
+FlowBoard/x64/
+*.user
+
+# Downloaded by the build: vcpkg libraries, ONNX Runtime (tools/fetch-onnxruntime.ps1)
+# and the hand models (tools/fetch-models.ps1)
+vcpkg_installed/
+third_party/
+models/*.onnx
