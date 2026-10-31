@@ -6,6 +6,8 @@ undo and the menu, grab to move the board.
 
 By [@omrla](https://github.com/omrla). Windows only.
 
+![How FlowBoard works: webcam, find the hands, 21 points per hand, steady them, read the gesture, draw on the board](docs/FlowBoard-pipeline-en.png)
+
 C++20, wxWidgets for the UI, and OpenCV for the camera and neural-network inference. Hand
 tracking runs Google's MediaPipe palm detector and hand-landmark models (ONNX exports from
 the [OpenCV Zoo](https://github.com/opencv/opencv_zoo)) on the graphics card through
